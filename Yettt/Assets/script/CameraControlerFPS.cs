@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControler : MonoBehaviour
+public class CameraControlerFPS : MonoBehaviour
 {
     public Transform target;
-    public Animator player;
+
     public float pitch = 2f;
     public Vector3 offset;
-   
+    public Animator player;
     private float yawspeed = 50.0f;
     public float currentyaw;
-    public GameObject ccamera;
 
     private void Start()
     {
         
     }
 
-
     void Update()
     {
-        if (player.GetBool("animer") == false)
+        //currentyaw -= Input.GetAxis("Horizontal") * yawspeed * Time.fixedDeltaTime;
+        if (player.GetBool("animer") == true)
         {
-            player.SetBool("animer", true);
+            
+            player.SetBool("marche", false);
+            player.SetBool("animer", false);
 
         }
-        
-       if (Input.GetKeyDown("a"))
+        if (Input.GetKeyDown("a"))
         {
             currentyaw = -90;
         }
@@ -43,7 +43,7 @@ public class CameraControler : MonoBehaviour
         {
             currentyaw = 90;
 
-            
+
         }
     }
 
@@ -52,6 +52,8 @@ public class CameraControler : MonoBehaviour
 
         transform.position = target.position - offset;
         transform.LookAt(target.transform.position + Vector3.up /* pitch*/);
-        transform.RotateAround(target.position, Vector3.up, currentyaw);
+        transform.RotateAround(transform.position, Vector3.up, currentyaw);
+        
     }
 }
+

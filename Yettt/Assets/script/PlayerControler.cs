@@ -7,30 +7,34 @@ public class PlayerControler : MonoBehaviour
     public float speed;
     public Animator anim;
     public AudioSource music;
-    public Camera personne1;
-    public Camera personne3;
-   
+    public GameObject personne1;
+    public GameObject personne3;
+    public GameObject Model3D;
+
     private Rigidbody rb;
     public int Score = 0;
-    public int angleTournage=0;
+    
 
 
 
     void Start()
     {
         anim = GetComponent<Animator>();
-       
-      
+
+        Model3D = GetComponent<GameObject>();
+
         rb = GetComponent<Rigidbody>();
         music.Pause();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+
+        transform.rotation = Quaternion.LookRotation(movement);
 
         rb.AddForce(movement * speed);
 
@@ -54,30 +58,21 @@ public class PlayerControler : MonoBehaviour
             
         }
 
-
-
-
-        if (Input.GetKeyDown("a"))
+        if (Input.GetKeyDown("e"))
         {
-            gameObject.transform.Rotate(0, -angleTournage, 0);
+            if (personne1.activeSelf)
+            {
+                personne3.SetActive(true);
+                personne1.SetActive(false);
+            }
+            else
+            {
+                personne1.SetActive(true);
+                personne3.SetActive(false);
+            }
         }
 
-        if (Input.GetKeyUp("a"))
-        {
-            gameObject.transform.Rotate(0, angleTournage, 0);
-        }
 
-        if (Input.GetKeyDown("d"))
-        {
-            gameObject.transform.Rotate(0, angleTournage, 0);
-        }
-
-        if (Input.GetKeyUp("d"))
-        {
-            gameObject.transform.Rotate(0, -angleTournage, 0);
-        }
-
-        
 
     }
 
